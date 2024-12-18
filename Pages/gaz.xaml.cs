@@ -66,9 +66,18 @@ namespace gaz.Pages
         }
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Вы уверены, что хотите выйти?", "Выйти?", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
+            
+            if (MessageBox.Show("Вы уверены, что хотите выйти?", "Выйти?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 Application.Current.Shutdown();
+        }
+
+        private void dist_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (dist.SelectedItem != null)
+            {
+                var mat = dist.SelectedItem;
+                this.NavigationService.Navigate(new EditDist(mat));
+            }
         }
     }
 }

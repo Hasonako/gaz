@@ -84,6 +84,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\EditDist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\gaz.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,6 +125,9 @@
     </Compile>
     <Compile Include="Pages\auth.xaml.cs">
       <DependentUpon>auth.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\EditDist.xaml.cs">
+      <DependentUpon>EditDist.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\gaz.xaml.cs">
       <DependentUpon>gaz.xaml</DependentUpon>

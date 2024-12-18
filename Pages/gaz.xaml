@@ -36,7 +36,7 @@
         </StackPanel>
         <!--Таблица-->
         <StackPanel Grid.Row="2">
-            <DataGrid Name="dist" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid Name="dist" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="dist_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Код" Binding="{Binding code}" Width="100"/>
                     <DataGridTextColumn Header="Наименование" Binding="{Binding name}" Width="400"/>
