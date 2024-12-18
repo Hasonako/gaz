@@ -41,16 +41,20 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1" Margin="0 100 0 0">
+                <StackPanel Grid.Row="1" Margin="0 70 0 0">
+                    <Label Content="Логин"/>
                     <Border Background="#80c0ff" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
-                        <TextBox Name="log" Background="Transparent" Width="300" BorderThickness="0" Text="Логин" VerticalAlignment="Center"/>
+                        <TextBox Name="log" Background="Transparent" Width="300" BorderThickness="0" VerticalAlignment="Center"/>
                     </Border>
+                    <Label Content="Пароль"/>
                     <Border Background="#80c0ff" Width="320" CornerRadius="5" Height="40" Margin="6" Opacity="0.7">
-                        <TextBox Name="pass" Background="Transparent" Width="300" BorderThickness="0" Text="Пароль" VerticalAlignment="Center"/>
+                        <PasswordBox Name="pass" Background="Transparent" Width="300" BorderThickness="0" VerticalAlignment="Center" MaxLength="25"/>
                     </Border>
+                    <Label Name="wrong" FontSize="14" Foreground="PaleVioletRed" Height="40" HorizontalAlignment="Center"/>
+
                 </StackPanel>
                 <Border VerticalAlignment="Top" Grid.Row="2" Background="#6a7eee" Height="50" Width="250" CornerRadius="10">
-                    <Button Background="Transparent" Content="Вход" Margin="5" Foreground="White" FontSize="22" BorderThickness="0"/>
+                    <Button Background="Transparent" Content="Вход" Margin="5" Foreground="White" FontSize="22" BorderThickness="0" Click="Button_Click"/>
                 </Border>
             </Grid>
         </Border>

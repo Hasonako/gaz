@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gaz.Main;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace gaz
         public MainWindow()
         {
             InitializeComponent();
+            dbConnect.entObj = new gazEntities();
             Main.frameAcc.frmObj = mainFrame;
             mainFrame.Navigate(new Pages.auth());
         }
