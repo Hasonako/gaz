@@ -39,19 +39,9 @@ namespace gaz.Pages
             ApplyFilters();
         }
 
-        private void menuArzamas_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void menuNN_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void menuAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            this.NavigationService.Navigate(new AddDist());
         }
 
         private void menuReport_Click(object sender, RoutedEventArgs e)
@@ -76,7 +66,7 @@ namespace gaz.Pages
         }
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButton.YesNo);
+            MessageBoxResult messageBoxResult = MessageBox.Show("Вы уверены, что хотите выйти?", "Выйти?", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
                 Application.Current.Shutdown();
         }
