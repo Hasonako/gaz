@@ -12,7 +12,7 @@ namespace gaz.Main
     using System;
     using System.Collections.Generic;
     
-    public partial class distribution
+    public partial class distributionArz
     {
         public int id { get; set; }
         public int code { get; set; }

@@ -1,5 +1,6 @@
 ﻿using gaz.Main;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity.Infrastructure;
@@ -24,10 +25,9 @@ namespace gaz.Pages
         public gaz()
         {
             InitializeComponent();
-            dist.ItemsSource = dbConnect.entObj.distribution.ToList();
-            username.Text = Role.UserName;
+            username.Text = "Добро пожаловать, " + Role.UserName;
             
-            if (Role.UserName == "admin")
+            if (Role.UserRole == "admin")
             { 
                 MenuItem Emlpoyee = new MenuItem();
                 Emlpoyee.Header = "Сотрудники";
@@ -35,10 +35,12 @@ namespace gaz.Pages
                 MainMenu.Items.Insert(1, Emlpoyee);
             }
 
-            if (Role.UserName == "empl")
+            if (Role.UserRole == "empl")
             {
 
             }
+
+            ApplyFilters();
         }
 
         private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e)
@@ -63,18 +65,40 @@ namespace gaz.Pages
         private void ApplyFilters()
         {
             string searchText = txbSearchName.Text.ToLower();
-            var query = dbConnect.entObj.distribution.AsQueryable();
-
-            if (!string.IsNullOrEmpty(txbSearchCode.Text))
+            
+            if (cmbFilterPlace.SelectedIndex == 0)
             {
-                int searchCode = Convert.ToInt32(txbSearchCode.Text);
-                query = query.Where(m => m.code == searchCode);
+                var query = dbConnect.entObj.distributionArz.AsQueryable();
+                if (!string.IsNullOrEmpty(txbSearchCode.Text))
+                {
+                    int searchCode = Convert.ToInt32(txbSearchCode.Text);
+                    
+                    query = query.Where(m => m.code == searchCode);
+                }
+
+                if (!string.IsNullOrEmpty(txbSearchName.Text))
+                {
+                    query = query.Where(m => m.name.ToLower().Contains(searchText));
+                }
+                dist.ItemsSource = query.ToList();
             }
 
-            if (!string.IsNullOrEmpty(txbSearchName.Text))
-                query = query.Where(m => m.name.ToLower().Contains(searchText));
+            if (cmbFilterPlace.SelectedIndex == 1)
+            {
+                var query = dbConnect.entObj.distributionNN.AsQueryable();
+                if (!string.IsNullOrEmpty(txbSearchCode.Text))
+                {
+                    int searchCode = Convert.ToInt32(txbSearchCode.Text);
 
-            dist.ItemsSource = query.ToList();
+                    query = query.Where(m => m.code == searchCode);
+                }
+
+                if (!string.IsNullOrEmpty(txbSearchName.Text))
+                {
+                    query = query.Where(m => m.name.ToLower().Contains(searchText));
+                }
+                dist.ItemsSource = query.ToList();
+            }
         }
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {
@@ -95,6 +119,11 @@ namespace gaz.Pages
         private void menuEmpl_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new Empl());
+        }
+
+        private void cmbFilterPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ApplyFilters();
         }
     }
 }

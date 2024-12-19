@@ -37,7 +37,8 @@ namespace gaz.Pages
             if (user == null) wrong.Content = "Неверный логин или пароль";
             else 
             {
-                Role.UserName = user.role;
+                Role.UserName = user.name;
+                Role.UserRole = user.role;
                 this.NavigationService.Navigate(new gaz());
             }
         }

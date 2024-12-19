@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище gazModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище gazModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="authorization">
           <Key>
             <PropertyRef Name="id" />
@@ -15,14 +15,25 @@
           <Property Name="name" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="role" Type="nvarchar" MaxLength="25" Nullable="false" />
         </EntityType>
-        <EntityType Name="distribution">
+        <EntityType Name="distributionArz">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="code" Type="int" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
-          <Property Name="length" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="length" Type="decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="endpoint" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="distributionNN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="length" Type="decimal" Precision="8" Scale="2" Nullable="false" />
           <Property Name="status" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="endpoint" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -38,11 +49,11 @@
         </EntityType>
         <EntityContainer Name="Хранилище gazModelContainer">
           <EntitySet Name="authorization" EntityType="Self.authorization" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="distribution" EntityType="Self.distribution" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="distributionArz" EntityType="Self.distributionArz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="distributionNN" EntityType="Self.distributionNN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="gazModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -56,17 +67,6 @@
           <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="role" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityType Name="distribution">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="code" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="length" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="endpoint" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -79,9 +79,32 @@
         </EntityType>
         <EntityContainer Name="gazEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="authorization" EntityType="Self.authorization" />
-          <EntitySet Name="distribution" EntityType="Self.distribution" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="distributionArz" EntityType="gazModel.distributionArz" />
+          <EntitySet Name="distributionNN" EntityType="gazModel.distributionNN" />
         </EntityContainer>
+        <EntityType Name="distributionArz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="length" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="endpoint" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="distributionNN">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="length" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="endpoint" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -99,18 +122,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="distribution">
-            <EntityTypeMapping TypeName="gazModel.distribution">
-              <MappingFragment StoreEntitySet="distribution">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="length" ColumnName="length" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
             <EntityTypeMapping TypeName="gazModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
@@ -119,6 +130,30 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="distributionArz">
+            <EntityTypeMapping TypeName="gazModel.distributionArz">
+              <MappingFragment StoreEntitySet="distributionArz">
+                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="distributionNN">
+            <EntityTypeMapping TypeName="gazModel.distributionNN">
+              <MappingFragment StoreEntitySet="distributionNN">
+                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
