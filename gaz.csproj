@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>flame.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
@@ -76,7 +79,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\AddDist.xaml">
+    <Page Include="Pages\Distribution\AddDist.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Employee\AddEmpl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,11 +91,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\EditDist.xaml">
+    <Page Include="Pages\Distribution\EditDist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\gaz.xaml">
+    <Page Include="Pages\Employee\EditEmpl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Employee\Empl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Distribution\gaz.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,19 +132,29 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Main\Role.cs" />
     <Compile Include="Main\sysdiagrams.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AddDist.xaml.cs">
+    <Compile Include="Pages\Distribution\AddDist.xaml.cs">
       <DependentUpon>AddDist.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Employee\AddEmpl.xaml.cs">
+      <DependentUpon>AddEmpl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\auth.xaml.cs">
       <DependentUpon>auth.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\EditDist.xaml.cs">
+    <Compile Include="Pages\Distribution\EditDist.xaml.cs">
       <DependentUpon>EditDist.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\gaz.xaml.cs">
+    <Compile Include="Pages\Employee\EditEmpl.xaml.cs">
+      <DependentUpon>EditEmpl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Employee\Empl.xaml.cs">
+      <DependentUpon>Empl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Distribution\gaz.xaml.cs">
       <DependentUpon>gaz.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -176,6 +201,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </Content>
+    <Resource Include="flame.ico" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

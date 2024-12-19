@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace gaz.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для EditDist.xaml
-    /// </summary>
     public partial class EditDist : Page
     {
         private distribution dst;

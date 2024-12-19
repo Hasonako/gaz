@@ -15,18 +15,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static gaz.MainWindow;
 
 namespace gaz.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для gaz.xaml
-    /// </summary>
     public partial class gaz : Page
     {
         public gaz()
         {
             InitializeComponent();
             dist.ItemsSource = dbConnect.entObj.distribution.ToList();
+            username.Text = Role.UserName;
+            
+            if (Role.UserName == "admin")
+            { 
+                MenuItem Emlpoyee = new MenuItem();
+                Emlpoyee.Header = "Сотрудники";
+                Emlpoyee.Click += new RoutedEventHandler(menuEmpl_Click);
+                MainMenu.Items.Insert(1, Emlpoyee);
+            }
+
+            if (Role.UserName == "empl")
+            {
+
+            }
         }
 
         private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e)
@@ -53,13 +65,13 @@ namespace gaz.Pages
             string searchText = txbSearchName.Text.ToLower();
             var query = dbConnect.entObj.distribution.AsQueryable();
 
-            if (txbSearchCode.Text != "Код" && !string.IsNullOrEmpty(txbSearchCode.Text))
+            if (!string.IsNullOrEmpty(txbSearchCode.Text))
             {
                 int searchCode = Convert.ToInt32(txbSearchCode.Text);
                 query = query.Where(m => m.code == searchCode);
             }
 
-            if (txbSearchName.Text != "Поиск по наименованию" && !string.IsNullOrEmpty(txbSearchName.Text))
+            if (!string.IsNullOrEmpty(txbSearchName.Text))
                 query = query.Where(m => m.name.ToLower().Contains(searchText));
 
             dist.ItemsSource = query.ToList();
@@ -78,6 +90,11 @@ namespace gaz.Pages
                 var mat = dist.SelectedItem;
                 this.NavigationService.Navigate(new EditDist(mat));
             }
+        }
+
+        private void menuEmpl_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Empl());
         }
     }
 }

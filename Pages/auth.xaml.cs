@@ -24,7 +24,6 @@ namespace gaz.Pages
     /// </summary>
     public partial class auth : Page
     {
-        public string rol;
         public auth()
         {
             InitializeComponent();
@@ -38,7 +37,7 @@ namespace gaz.Pages
             if (user == null) wrong.Content = "Неверный логин или пароль";
             else 
             {
-                rol = user.role;
+                Role.UserName = user.role;
                 this.NavigationService.Navigate(new gaz());
             }
         }

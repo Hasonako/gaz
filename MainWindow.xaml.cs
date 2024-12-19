@@ -21,6 +21,7 @@ namespace gaz
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -28,5 +29,6 @@ namespace gaz
             Main.frameAcc.frmObj = mainFrame;
             mainFrame.Navigate(new Pages.auth());
         }
+
     }
 }
