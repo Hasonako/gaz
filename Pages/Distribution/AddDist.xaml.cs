@@ -27,11 +27,11 @@ namespace gaz.Pages
             InitializeComponent();
             cmbFilterStatus.SelectedValuePath = "status";
             cmbFilterStatus.DisplayMemberPath = "status";
-            cmbFilterStatus.ItemsSource = dbConnect.entObj.distribution.GroupBy(o => o.status).ToList();
+            cmbFilterStatus.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.status).ToList();
 
             cmbFilterDest.SelectedValuePath = "endpoint";
             cmbFilterDest.DisplayMemberPath = "endpoint";
-            cmbFilterDest.ItemsSource = dbConnect.entObj.distribution.GroupBy(o => o.endpoint).ToList();
+            cmbFilterDest.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.endpoint).ToList();
         }
 
         private void menuBack_Click(object sender, RoutedEventArgs e)
