@@ -69,9 +69,6 @@ namespace gaz.Pages
             this.NavigationService.Navigate(new gaz());
         }
 
-        private void menuBack_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.GoBack();
-        }
+        private void menuBack_Click(object sender, RoutedEventArgs e) => this.NavigationService.GoBack();
     }
 }

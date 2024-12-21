@@ -35,10 +35,7 @@ namespace gaz.Pages
             cmbFilterRole.SelectedValue = EmplObj.role;
         }
 
-        private void menuBack_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new Empl());
-        }
+        private void menuBack_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new Empl());
 
         private void menuDlt_Click(object sender, RoutedEventArgs e)
         {

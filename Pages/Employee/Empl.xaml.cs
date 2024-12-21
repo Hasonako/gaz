@@ -26,17 +26,6 @@ namespace gaz.Pages
             InitializeComponent();
             emp.ItemsSource = dbConnect.entObj.authorization.ToList();
         }
-
-        private void menuAddEmpl_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new AddEmpl());
-        }
-
-        private void menuBack_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new gaz());
-        }
-
         private void emp_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (emp.SelectedItem != null)
@@ -55,9 +44,8 @@ namespace gaz.Pages
 
             emp.ItemsSource = query.ToList();
         }
-        private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
+        private void menuAddEmpl_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new AddEmpl());
+        private void menuBack_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new gaz());
+        private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
     }
 }

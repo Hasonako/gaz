@@ -31,10 +31,7 @@ namespace gaz.Pages
             cmbFilterRole.ItemsSource = dbConnect.entObj.authorization.GroupBy(o => o.role).ToList();
         }
 
-        private void menuBack_Click(object sender, RoutedEventArgs e)
-        {
-            this.NavigationService.Navigate(new Empl());
-        }
+        private void menuBack_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new Empl());
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {

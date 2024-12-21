@@ -27,11 +27,11 @@ namespace gaz.Pages
             InitializeComponent();
             cmbFilterStatus.SelectedValuePath = "status";
             cmbFilterStatus.DisplayMemberPath = "status";
-            cmbFilterStatus.ItemsSource = dbConnect.entObj.distribution.GroupBy(o => o.status).ToList();
+            cmbFilterStatus.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.status).ToList();
 
             cmbFilterDest.SelectedValuePath = "endpoint";
             cmbFilterDest.DisplayMemberPath = "endpoint";
-            cmbFilterDest.ItemsSource = dbConnect.entObj.distribution.GroupBy(o => o.endpoint).ToList();
+            cmbFilterDest.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.endpoint).ToList();
         }
 
         private void menuBack_Click(object sender, RoutedEventArgs e)
@@ -41,23 +41,37 @@ namespace gaz.Pages
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            distribution distObj = new distribution()
+            try
             {
-                code = Convert.ToInt32(txbCode.Text),
-                name = txbName.Text,
-                length = Convert.ToDecimal(txbLength.Text),
-                status = cmbFilterStatus.Text,
-                endpoint = cmbFilterDest.Text
-            };
-            dbConnect.entObj.distribution.Add(distObj);
-            dbConnect.entObj.SaveChanges();
-            MessageBox.Show(
-                "Газопровод '" + distObj.name + "' добавлен",
-                "Уведомление",
-                MessageBoxButton.OK,
-                MessageBoxImage.Warning
-                );
-            this.NavigationService.Navigate(new gaz());
+                distributionArz distObj = new distributionArz()
+                {
+                    code = Convert.ToInt32(txbCode.Text),
+                    name = txbName.Text,
+                    length = Convert.ToDecimal(txbLength.Text),
+                    status = cmbFilterStatus.Text,
+                    endpoint = cmbFilterDest.Text
+                };
+                dbConnect.entObj.distributionArz.Add(distObj);
+                dbConnect.entObj.SaveChanges();
+                MessageBox.Show(
+                    "Газопровод '" + distObj.name + "' добавлен",
+                    "Уведомление",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                    );
+                this.NavigationService.Navigate(new gaz());
+            }
+            catch 
+            {
+                MessageBox.Show(
+                    "Введены неверные данные",
+                    "Уведомление",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                    );
+            }
+
+            
         }
     }
 }

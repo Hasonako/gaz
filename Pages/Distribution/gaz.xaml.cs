@@ -55,11 +55,6 @@ namespace gaz.Pages
         {
             this.NavigationService.Navigate(new AddDist());
         }
-
-        private void menuReport_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
         private void ApplyFilters()
         {
             string searchText = txbSearchName.Text.ToLower();

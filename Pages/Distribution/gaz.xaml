@@ -20,7 +20,6 @@
         <!--Меню-->
         <Menu Name="MainMenu" Grid.Row="0">
             <MenuItem Name="menuAdd" Header="Добавить" Click="menuAdd_Click"/>
-            <MenuItem Name="menuReport" Header="Отчет" Click="menuReport_Click"/>
             <MenuItem Name="menuExit" Header="Выход" Click="menuExit_Click"/>
         </Menu>
         <!--Фильтры-->
