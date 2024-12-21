@@ -26,7 +26,8 @@ namespace gaz.Main
         }
     
         public virtual DbSet<authorization> authorization { get; set; }
-        public virtual DbSet<distribution> distribution { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<distributionArz> distributionArz { get; set; }
+        public virtual DbSet<distributionNN> distributionNN { get; set; }
     }
 }

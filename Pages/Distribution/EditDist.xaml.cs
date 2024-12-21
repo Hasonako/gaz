@@ -21,22 +21,22 @@ namespace gaz.Pages
 {
     public partial class EditDist : Page
     {
-        private distribution dst;
+        private distributionArz dst;
         public EditDist(object mat)
         {
             InitializeComponent();
             DataContext = mat;
             var mid = TypeDescriptor.GetProperties(DataContext)["id"].GetValue(DataContext);
-            dst = dbConnect.entObj.distribution.FirstOrDefault(a => a.id == (int)mid);
+            dst = dbConnect.entObj.distributionArz.FirstOrDefault(a => a.id == (int)mid);
 
             cmbFilterDest.SelectedValuePath = "endpoint";
             cmbFilterDest.DisplayMemberPath = "endpoint";
-            cmbFilterDest.ItemsSource = dbConnect.entObj.distribution.GroupBy(o => o.endpoint).ToList();
+            cmbFilterDest.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.endpoint).ToList();
             cmbFilterDest.SelectedValue = dst.endpoint;
 
             cmbFilterStatus.SelectedValuePath = "status";
             cmbFilterStatus.DisplayMemberPath = "status";
-            cmbFilterStatus.ItemsSource = dbConnect.entObj.distribution.GroupBy(o => o.status).ToList();
+            cmbFilterStatus.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.status).ToList();
             cmbFilterStatus.SelectedValue = dst.status;
         }
 
@@ -44,7 +44,7 @@ namespace gaz.Pages
         {
             if (MessageBox.Show("Вы уверены?", "Удаление направления", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                dbConnect.entObj.distribution.Remove(dst);
+                dbConnect.entObj.distributionArz.Remove(dst);
                 dbConnect.entObj.SaveChanges();
                 this.NavigationService.Navigate(new gaz());
             }

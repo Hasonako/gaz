@@ -24,6 +24,11 @@
         </Menu>
         <!--Фильтры-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <ComboBox Name="cmbFilterPlace" Width="150" Height="25" FontSize="14" Text="Филиал" 
+            VerticalContentAlignment="Center" Margin="5" SelectionChanged="cmbFilterPlace_SelectionChanged">
+                <ComboBoxItem Content="Филиал Арзамас"/>
+                <ComboBoxItem Content="Филиал НН"/>
+            </ComboBox>
             <Label Content="Код:" VerticalAlignment="Center"/>
             <TextBox Name="txbSearchCode" Width="50" Height="25" FontSize="14" Margin="5"
             VerticalContentAlignment="Center"
@@ -32,7 +37,7 @@
             <TextBox Name="txbSearchName" Width="250" Height="25" FontSize="14" Margin="5"
             VerticalContentAlignment="Center"
             TextChanged="txbSearchName_TextChanged"/>
-            <TextBlock Name="username"  Text=""/>
+            <TextBlock Name="username" VerticalAlignment="Center" Text=""/>
         </StackPanel>
         <!--Таблица-->
         <StackPanel Grid.Row="2">

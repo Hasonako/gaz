@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace gaz.Main
 {
-    public class Role
+    public class Branch
     {
-        public static string UserRole = "";
-        public static string UserName = "";
+        public static string mainBranch = "";
     }
 }
