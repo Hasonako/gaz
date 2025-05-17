@@ -12,23 +12,26 @@ namespace gaz.Main
     using System;
     using System.Collections.Generic;
     
-    public partial class authorization
+    public partial class Pipeline
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public authorization()
+        public Pipeline()
         {
             this.Events = new HashSet<Event>();
         }
     
-        public int id { get; set; }
-        public string login { get; set; }
-        public string password { get; set; }
-        public string name { get; set; }
-        public string role { get; set; }
-        public Nullable<int> tasks { get; set; }
+        public int PipelineID { get; set; }
+        public int Code { get; set; }
+        public string Location { get; set; }
+        public Nullable<System.DateTime> InstallationDate { get; set; }
+        public Nullable<System.DateTime> LastInspectionDate { get; set; }
+        public Nullable<System.DateTime> NextInspectionDate { get; set; }
+        public string Status { get; set; }
+        public Nullable<double> Pressure { get; set; }
+        public Nullable<double> Length { get; set; }
+        public string Notes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
-        public virtual UserTask UserTask { get; set; }
     }
 }

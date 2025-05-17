@@ -21,30 +21,25 @@ namespace gaz.Pages
 {
     public partial class EditDist : Page
     {
-        private distributionArz dst;
+        private Pipeline dst;
         public EditDist(object mat)
         {
             InitializeComponent();
             DataContext = mat;
-            var mid = TypeDescriptor.GetProperties(DataContext)["id"].GetValue(DataContext);
-            dst = dbConnect.entObj.distributionArz.FirstOrDefault(a => a.id == (int)mid);
+            var mid = TypeDescriptor.GetProperties(DataContext)["PipelineID"].GetValue(DataContext);
+            dst = dbConnect.entObj.Pipeline.FirstOrDefault(a => a.PipelineID == (int)mid);
 
-            cmbFilterDest.SelectedValuePath = "endpoint";
-            cmbFilterDest.DisplayMemberPath = "endpoint";
-            cmbFilterDest.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.endpoint).ToList();
-            cmbFilterDest.SelectedValue = dst.endpoint;
-
-            cmbFilterStatus.SelectedValuePath = "status";
-            cmbFilterStatus.DisplayMemberPath = "status";
-            cmbFilterStatus.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.status).ToList();
-            cmbFilterStatus.SelectedValue = dst.status;
+            cmbFilterStatus.SelectedValuePath = "Status";
+            cmbFilterStatus.DisplayMemberPath = "Status";
+            cmbFilterStatus.ItemsSource = dbConnect.entObj.Pipeline.GroupBy(o => o.Status).ToList();
+            cmbFilterStatus.SelectedValue = dst.Status;
         }
 
         private void menuDlt_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("Вы уверены?", "Удаление направления", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show("Вы уверены?", "Удаление газопровода", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                dbConnect.entObj.distributionArz.Remove(dst);
+                dbConnect.entObj.Pipeline.Remove(dst);
                 dbConnect.entObj.SaveChanges();
                 this.NavigationService.Navigate(new gaz());
             }
@@ -53,12 +48,11 @@ namespace gaz.Pages
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             string txb = txbLength.Text.Replace('.', ',');
-            decimal len = Convert.ToDecimal(txb);
-            dst.code = Convert.ToInt32(txbCode.Text);
-            dst.name = txbName.Text;
-            dst.length = len;
-            dst.status = cmbFilterStatus.Text;
-            dst.endpoint = cmbFilterDest.Text;
+            double len = Convert.ToDouble(txbLength);
+            dst.Code = Convert.ToInt32(txbCode.Text);
+            dst.Location = txbName.Text;
+            dst.Length = len;
+            dst.Status = cmbFilterStatus.Text;
             dbConnect.entObj.SaveChanges();
             MessageBox.Show(
                 "Сохранено",

@@ -60,40 +60,19 @@ namespace gaz.Pages
         private void ApplyFilters()
         {
             string searchText = txbSearchName.Text.ToLower();
-            
-            if (cmbFilterPlace.SelectedIndex == 0)
+            var query = dbConnect.entObj.Pipeline.AsQueryable();
+            if (!string.IsNullOrEmpty(txbSearchCode.Text))
             {
-                var query = dbConnect.entObj.distributionArz.AsQueryable();
-                if (!string.IsNullOrEmpty(txbSearchCode.Text))
-                {
-                    int searchCode = Convert.ToInt32(txbSearchCode.Text);
-                    
-                    query = query.Where(m => m.code == searchCode);
-                }
+                int searchCode = Convert.ToInt32(txbSearchCode.Text);
 
-                if (!string.IsNullOrEmpty(txbSearchName.Text))
-                {
-                    query = query.Where(m => m.name.ToLower().Contains(searchText));
-                }
-                dist.ItemsSource = query.ToList();
+                query = query.Where(m => m.Code == searchCode);
             }
 
-            if (cmbFilterPlace.SelectedIndex == 1)
+            if (!string.IsNullOrEmpty(txbSearchName.Text))
             {
-                var query = dbConnect.entObj.distributionNN.AsQueryable();
-                if (!string.IsNullOrEmpty(txbSearchCode.Text))
-                {
-                    int searchCode = Convert.ToInt32(txbSearchCode.Text);
-
-                    query = query.Where(m => m.code == searchCode);
-                }
-
-                if (!string.IsNullOrEmpty(txbSearchName.Text))
-                {
-                    query = query.Where(m => m.name.ToLower().Contains(searchText));
-                }
-                dist.ItemsSource = query.ToList();
+                query = query.Where(m => m.Location.ToLower().Contains(searchText));
             }
+            dist.ItemsSource = query.ToList();
         }
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {

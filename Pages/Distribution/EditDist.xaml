@@ -26,28 +26,27 @@
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Код:" Width="150"/>
-                <TextBox Name="txbCode" Width="150" Text="{Binding code}"/>
+                <TextBox Name="txbCode" Width="150" Text="{Binding Code}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Наименование:" Width="150"/>
-                <TextBox Name="txbName" Width="150" Text="{Binding name}"/>
+                <TextBlock Text="Локация:" Width="150"/>
+                <TextBox Name="txbName" Width="150" Text="{Binding Location}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Давление:" Width="150"/>
+                <TextBox Name="txbPressure" Width="150" Text="{Binding Pressure}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Длина:" Width="150"/>
-                <TextBox Name="txbLength" Width="150" Text="{Binding length}"/>
+                <TextBox Name="txbLength" Width="150" Text="{Binding Length}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Статус:" Width="150"/>
                 <ComboBox Name="cmbFilterStatus" Width="150" Height="25" FontSize="14" 
-            VerticalContentAlignment="Center"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Выход:" Width="150"/>
-                <ComboBox Name="cmbFilterDest" Width="150" Height="25" FontSize="14" 
             VerticalContentAlignment="Center"/>
             </StackPanel>
 

@@ -24,16 +24,11 @@
         </Menu>
         <!--Фильтры-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
-            <ComboBox Name="cmbFilterPlace" Width="150" Height="25" FontSize="14" Text="Филиал" 
-            VerticalContentAlignment="Center" Margin="5" SelectionChanged="cmbFilterPlace_SelectionChanged">
-                <ComboBoxItem Content="Филиал Арзамас"/>
-                <ComboBoxItem Content="Филиал НН"/>
-            </ComboBox>
             <Label Content="Код:" VerticalAlignment="Center"/>
             <TextBox Name="txbSearchCode" Width="50" Height="25" FontSize="14" Margin="5"
             VerticalContentAlignment="Center"
             TextChanged="txbSearchCode_TextChanged"/>
-            <Label Content="Наименование:" VerticalAlignment="Center"/>
+            <Label Content="Локация:" VerticalAlignment="Center"/>
             <TextBox Name="txbSearchName" Width="250" Height="25" FontSize="14" Margin="5"
             VerticalContentAlignment="Center"
             TextChanged="txbSearchName_TextChanged"/>
@@ -43,11 +38,14 @@
         <StackPanel Grid.Row="2">
             <DataGrid Name="dist" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="dist_MouseDoubleClick">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Код" Binding="{Binding code}" Width="100"/>
-                    <DataGridTextColumn Header="Наименование" Binding="{Binding name}" Width="400"/>
-                    <DataGridTextColumn Header="Длина" Binding="{Binding length}" Width="*"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding status}" Width="*"/>
-                    <DataGridTextColumn Header="Выход" Binding="{Binding endpoint}" Width="*"/>
+                    <DataGridTextColumn Header="Код" Binding="{Binding Code}" Width="100"/>
+                    <DataGridTextColumn Header="Локация" Binding="{Binding Location}" Width="150"/>
+                    <DataGridTextColumn Header="Последняя инспекция" Binding="{Binding LastInspectionDate}" Width="*"/>
+                    <DataGridTextColumn Header="Следующая инспекция" Binding="{Binding NextInspectionDate}" Width="*"/>
+                    <DataGridTextColumn Header="Дата установки" Binding="{Binding InstallationDate}" Width="*"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                    <DataGridTextColumn Header="Давление" Binding="{Binding Pressure}" Width="*"/>
+                    <DataGridTextColumn Header="Длина" Binding="{Binding Length}" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

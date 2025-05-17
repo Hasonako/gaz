@@ -8,6 +8,7 @@ namespace gaz.Main
 {
     public class Role
     {
+        public static int UserId;
         public static string UserRole = "";
         public static string UserName = "";
     }

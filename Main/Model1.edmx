@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище gazModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="gazModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="authorization">
           <Key>
             <PropertyRef Name="id" />
@@ -14,6 +14,7 @@
           <Property Name="password" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="name" Type="nvarchar" MaxLength="25" Nullable="false" />
           <Property Name="role" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="tasks" Type="int" />
         </EntityType>
         <EntityType Name="distributionArz">
           <Key>
@@ -37,23 +38,101 @@
           <Property Name="status" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="endpoint" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
+        <EntityType Name="Events">
           <Key>
-            <PropertyRef Name="diagram_id" />
+            <PropertyRef Name="EventID" />
           </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="EventID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EventType" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EventDate" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="PipelineID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="IsCritical" Type="bit" />
         </EntityType>
-        <EntityContainer Name="Хранилище gazModelContainer">
+        <EntityType Name="Pipelines">
+          <Key>
+            <PropertyRef Name="PipelineID" />
+          </Key>
+          <Property Name="PipelineID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="250" />
+          <Property Name="InstallationDate" Type="date" />
+          <Property Name="LastInspectionDate" Type="date" />
+          <Property Name="NextInspectionDate" Type="date" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pressure" Type="float" />
+          <Property Name="Length" Type="float" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="UserTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmployeeId" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_Events_Employees">
+          <End Role="authorization" Type="Self.authorization" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authorization">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Pipelines">
+          <End Role="Pipelines" Type="Self.Pipelines" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pipelines">
+              <PropertyRef Name="PipelineID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="PipelineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Task">
+          <End Role="UserTasks" Type="Self.UserTasks" Multiplicity="0..1" />
+          <End Role="authorization" Type="Self.authorization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="authorization">
+              <PropertyRef Name="tasks" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gazModelStoreContainer">
           <EntitySet Name="authorization" EntityType="Self.authorization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="distributionArz" EntityType="Self.distributionArz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="distributionNN" EntityType="Self.distributionNN" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pipelines" EntityType="Self.Pipelines" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTasks" EntityType="Self.UserTasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Events_Employees" Association="Self.FK_Events_Employees">
+            <End Role="authorization" EntitySet="authorization" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Pipelines" Association="Self.FK_Events_Pipelines">
+            <End Role="Pipelines" EntitySet="Pipelines" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Task" Association="Self.FK_User_Task">
+            <End Role="UserTasks" EntitySet="UserTasks" />
+            <End Role="authorization" EntitySet="authorization" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="gazModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -66,33 +145,20 @@
           <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="role" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tasks" Type="Int32" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Events_Employees" FromRole="authorization" ToRole="Events" />
+          <NavigationProperty Name="UserTask" Relationship="Self.FK_User_Task" FromRole="authorization" ToRole="UserTasks" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityContainer Name="gazEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="authorization" EntityType="Self.authorization" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="distributionArz" EntityType="gazModel.distributionArz" />
-          <EntitySet Name="distributionNN" EntityType="gazModel.distributionNN" />
-        </EntityContainer>
         <EntityType Name="distributionArz">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="code" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="length" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="endpoint" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="length" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="endpoint" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="distributionNN">
           <Key>
@@ -100,18 +166,115 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="code" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="length" Type="Decimal" Nullable="false" Precision="8" Scale="2" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="endpoint" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="length" Type="Decimal" Precision="8" Scale="2" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="endpoint" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="EventID" />
+          </Key>
+          <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EventType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EventDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PipelineID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="IsCritical" Type="Boolean" />
+          <NavigationProperty Name="authorization" Relationship="Self.FK_Events_Employees" FromRole="Events" ToRole="authorization" />
+          <NavigationProperty Name="Pipeline" Relationship="Self.FK_Events_Pipelines" FromRole="Events" ToRole="Pipelines" />
+        </EntityType>
+        <EntityType Name="Pipeline">
+          <Key>
+            <PropertyRef Name="PipelineID" />
+          </Key>
+          <Property Name="PipelineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="InstallationDate" Type="DateTime" Precision="0" />
+          <Property Name="LastInspectionDate" Type="DateTime" Precision="0" />
+          <Property Name="NextInspectionDate" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pressure" Type="Double" />
+          <Property Name="Length" Type="Double" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Events_Pipelines" FromRole="Pipelines" ToRole="Events" />
+        </EntityType>
+        <EntityType Name="UserTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="authorizations" Relationship="Self.FK_User_Task" FromRole="UserTasks" ToRole="authorization" />
+        </EntityType>
+        <Association Name="FK_Events_Employees">
+          <End Role="authorization" Type="Self.authorization" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="authorization">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Task">
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="0..1" />
+          <End Role="authorization" Type="Self.authorization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="authorization">
+              <PropertyRef Name="tasks" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Events_Pipelines">
+          <End Role="Pipelines" Type="Self.Pipeline" Multiplicity="0..1" />
+          <End Role="Events" Type="Self.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pipelines">
+              <PropertyRef Name="PipelineID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="PipelineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="gazEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="authorizations" EntityType="Self.authorization" />
+          <EntitySet Name="distributionArzs" EntityType="Self.distributionArz" />
+          <EntitySet Name="distributionNNs" EntityType="Self.distributionNN" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Pipelines" EntityType="Self.Pipeline" />
+          <EntitySet Name="UserTasks" EntityType="Self.UserTask" />
+          <AssociationSet Name="FK_Events_Employees" Association="Self.FK_Events_Employees">
+            <End Role="authorization" EntitySet="authorizations" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Task" Association="Self.FK_User_Task">
+            <End Role="UserTasks" EntitySet="UserTasks" />
+            <End Role="authorization" EntitySet="authorizations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Events_Pipelines" Association="Self.FK_Events_Pipelines">
+            <End Role="Pipelines" EntitySet="Pipelines" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище gazModelContainer" CdmEntityContainer="gazEntities">
-          <EntitySetMapping Name="authorization">
+        <EntityContainerMapping StorageEntityContainer="gazModelStoreContainer" CdmEntityContainer="gazEntities">
+          <EntitySetMapping Name="authorizations">
             <EntityTypeMapping TypeName="gazModel.authorization">
               <MappingFragment StoreEntitySet="authorization">
                 <ScalarProperty Name="id" ColumnName="id" />
@@ -119,41 +282,71 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="tasks" ColumnName="tasks" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="gazModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="distributionArz">
+          <EntitySetMapping Name="distributionArzs">
             <EntityTypeMapping TypeName="gazModel.distributionArz">
               <MappingFragment StoreEntitySet="distributionArz">
-                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="length" ColumnName="length" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="distributionNN">
+          <EntitySetMapping Name="distributionNNs">
             <EntityTypeMapping TypeName="gazModel.distributionNN">
               <MappingFragment StoreEntitySet="distributionNN">
-                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="length" ColumnName="length" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="length" ColumnName="length" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="endpoint" ColumnName="endpoint" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="gazModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="EventID" ColumnName="EventID" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="EventDate" ColumnName="EventDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PipelineID" ColumnName="PipelineID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="IsCritical" ColumnName="IsCritical" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pipelines">
+            <EntityTypeMapping TypeName="gazModel.Pipeline">
+              <MappingFragment StoreEntitySet="Pipelines">
+                <ScalarProperty Name="PipelineID" ColumnName="PipelineID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="LastInspectionDate" ColumnName="LastInspectionDate" />
+                <ScalarProperty Name="NextInspectionDate" ColumnName="NextInspectionDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTasks">
+            <EntityTypeMapping TypeName="gazModel.UserTask">
+              <MappingFragment StoreEntitySet="UserTasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -171,10 +364,10 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
