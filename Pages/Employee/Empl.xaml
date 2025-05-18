@@ -20,6 +20,7 @@
         <!--Меню-->
         <Menu Name="MainMenu" Grid.Row="0">
             <MenuItem Name="menuAddEmpl" Header="Добавить сотрудника" Click="menuAddEmpl_Click"/>
+            <MenuItem Name="menuAddTask" Header="Добавить задачу" Click="menuAddTask_Click"/>
             <MenuItem Name="menuBack" Header="Назад" Click="menuBack_Click"/>
         </Menu>
         <!-- Фильтры -->

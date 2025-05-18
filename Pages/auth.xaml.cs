@@ -40,7 +40,7 @@ namespace gaz.Pages
                 Role.UserName = user.name;
                 Role.UserRole = user.role;
                 Role.UserId = user.id;
-                if(user.role == "admin") this.NavigationService.Navigate(new Employee.DashBoard());
+                if (user.role == "admin") this.NavigationService.Navigate(new Employee.AdminPage());
                 if (user.role == "empl") this.NavigationService.Navigate(new Employee.DashBoard());
             }
         }

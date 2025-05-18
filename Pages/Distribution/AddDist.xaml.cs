@@ -25,13 +25,9 @@ namespace gaz.Pages
         public AddDist()
         {
             InitializeComponent();
-            cmbFilterStatus.SelectedValuePath = "status";
-            cmbFilterStatus.DisplayMemberPath = "status";
-            cmbFilterStatus.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.status).ToList();
-
-            cmbFilterDest.SelectedValuePath = "endpoint";
-            cmbFilterDest.DisplayMemberPath = "endpoint";
-            cmbFilterDest.ItemsSource = dbConnect.entObj.distributionArz.GroupBy(o => o.endpoint).ToList();
+            cmbFilterStatus.SelectedValuePath = "Status";
+            cmbFilterStatus.DisplayMemberPath = "Status";
+            cmbFilterStatus.ItemsSource = dbConnect.entObj.Pipeline.GroupBy(o => o.Status).ToList();
         }
 
         private void menuBack_Click(object sender, RoutedEventArgs e)
@@ -43,18 +39,19 @@ namespace gaz.Pages
         {
             try
             {
-                distributionArz distObj = new distributionArz()
+                Pipeline distObj = new Pipeline()
                 {
-                    code = Convert.ToInt32(txbCode.Text),
-                    name = txbName.Text,
-                    length = Convert.ToDecimal(txbLength.Text),
-                    status = cmbFilterStatus.Text,
-                    endpoint = cmbFilterDest.Text
+                    Code = Convert.ToInt32(txbCode.Text),
+                    Location = txbLoc.Text,
+                    InstallationDate = Convert.ToDateTime(txbInstDate.Text),
+                    Length = Convert.ToDouble(txbLength.Text),
+                    Pressure = Convert.ToDouble(txbPressure.Text),
+                    Status = cmbFilterStatus.Text,
                 };
-                dbConnect.entObj.distributionArz.Add(distObj);
+                dbConnect.entObj.Pipeline.Add(distObj);
                 dbConnect.entObj.SaveChanges();
                 MessageBox.Show(
-                    "Газопровод '" + distObj.name + "' добавлен",
+                    "Газопровод '" + distObj.Code + "' добавлен",
                     "Уведомление",
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning

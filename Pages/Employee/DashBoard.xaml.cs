@@ -41,5 +41,10 @@ namespace gaz.Pages.Employee
         {
             this.NavigationService.Navigate(new gaz());
         }
+
+        private void menuLogout_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new auth());
+        }
     }
 }

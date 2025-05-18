@@ -18,7 +18,8 @@
         <!--Menu-->
         <Menu Name="MainMenu" Grid.Row="0">
             <MenuItem Name="PipeLines" Header="Газопроводы" Click="PipeLines_Click"/>
-            <MenuItem Name="menuExit" Header="Выход" Click="menuExit_Click"/>
+            <MenuItem Name="menuLogout" Header="Выйти из аккаунта" Click="menuLogout_Click"/>
+            <MenuItem Name="menuExit" Header="Выход из приложения" Click="menuExit_Click"/>
         </Menu>
 
         <!-- Header -->

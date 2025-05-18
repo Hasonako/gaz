@@ -47,5 +47,6 @@ namespace gaz.Pages
         private void menuAddEmpl_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new AddEmpl());
         private void menuBack_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new gaz());
         private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
+        private void menuAddTask_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Employee.AddTaskPage());
     }
 }

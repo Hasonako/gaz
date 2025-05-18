@@ -1,0 +1,30 @@
+﻿<Page x:Class="gaz.Pages.Employee.AdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:gaz.Pages.Employee"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AdminPage">
+
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="30" ShadowDepth="1" Opacity="0.4"/>
+        </Grid.Effect>
+        <!--Меню-->
+        <Menu Name="MainMenu" Grid.Row="0">
+            <MenuItem Name="menuLogout" Header="Выйти из аккаунта" Click="menuLogout_Click"/>
+            <MenuItem Name="menuExit" Header="Выход из приложения" Click="menuExit_Click"/>
+        </Menu>
+        <!--Выбор действия-->
+        <StackPanel Grid.Row="1" Width="200" Height="150">
+            <Button Name="PipelinesBtn" Width="150" Height="25" Content="Газопроводы" Margin="20" Click="PipelinesBtn_Click"/>
+            <Button Name="EmployeeBtn" Width="150" Height="25" Content="Сотрудники" Click="EmployeeBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Page>
