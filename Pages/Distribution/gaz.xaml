@@ -21,6 +21,7 @@
         <Menu Name="MainMenu" Grid.Row="0">
             <MenuItem Name="menuAdd" Header="Добавить" Click="menuAdd_Click"/>
             <MenuItem Name="menuExit" Header="Выход" Click="menuExit_Click"/>
+            <MenuItem Name="MenuBack" Header="Назад" Click="MenuBack_Click"/>
         </Menu>
         <!--Фильтры-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" >
@@ -43,7 +44,7 @@
                     <DataGridTextColumn Header="Последняя инспекция" Binding="{Binding LastInspectionDate}" Width="*"/>
                     <DataGridTextColumn Header="Следующая инспекция" Binding="{Binding NextInspectionDate}" Width="*"/>
                     <DataGridTextColumn Header="Дата установки" Binding="{Binding InstallationDate}" Width="*"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding PipeStatu.name}" Width="*"/>
                     <DataGridTextColumn Header="Давление" Binding="{Binding Pressure}" Width="*"/>
                     <DataGridTextColumn Header="Длина" Binding="{Binding Length}" Width="*"/>
                 </DataGrid.Columns>

@@ -25,32 +25,34 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
 
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Код:" Width="150"/>
-                <TextBox Name="txbCode" Width="150" Text="{Binding Code}"/>
+                <TextBlock Text="Локация:" Width="150"/>
+                <TextBox Name="txbLoc" Width="150"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Локация:" Width="150"/>
-                <TextBox Name="txbName" Width="150" Text="{Binding Location}"/>
+                <TextBlock Text="Дата след. инспекции:" Width="150"/>
+                <DatePicker Name="dpNextInspectionDate" Width="150" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Давление:" Width="150"/>
-                <TextBox Name="txbPressure" Width="150" Text="{Binding Pressure}"/>
+                <Button Content="-" Width="30" Click="BtnDec_Click"/>
+                <TextBox Name="txbPressure" Width="80" Text="0,0" TextAlignment="Center" Margin="5,0" />
+                <Button Content="+" Width="30" Click="BtnInc_Click"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Длина:" Width="150"/>
-                <TextBox Name="txbLength" Width="150" Text="{Binding Length}"/>
+                <TextBox Name="txbLength" Width="150"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Статус:" Width="150"/>
                 <ComboBox Name="cmbFilterStatus" Width="150" Height="25" FontSize="14" 
-            VerticalContentAlignment="Center"/>
+                VerticalContentAlignment="Center"/>
             </StackPanel>
 
-            <Button Name="btnEdit" Content="Изменить" Click="btnEdit_Click" Width="120" Margin="20"/>
+            <Button Name="btnAdd" Content="Сохранить" Click="btnEdit_Click" Width="120" Margin="20"/>
         </StackPanel>
     </Grid>
 </Page>

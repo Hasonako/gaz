@@ -27,8 +27,8 @@ namespace gaz.Pages.Employee
             InitializeComponent();
             username.Text = "Добро пожаловать, " + Role.UserName;
             TodayDay.Text = DateTime.Now.ToString("dd.MM.yyyy");
-            dgrEvents.ItemsSource = dbConnect.entObj.Event.Where(x => x.EmployeeID == Role.UserId).ToList();
-            dgrTasks.ItemsSource = dbConnect.entObj.UserTask.Where(x => x.EmployeeId == Role.UserId).ToList();
+            dgrEvents.ItemsSource = dbConnect.entObj.Events.Where(x => x.EmployeeID == Role.UserId).ToList();
+            dgrTasks.ItemsSource = dbConnect.entObj.UserTasks.Where(x => x.EmployeeId == Role.UserId).ToList();
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)

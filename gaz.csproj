@@ -124,14 +124,7 @@
     <Compile Include="Main\authorization.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Main\Branch.cs" />
     <Compile Include="Main\dbConnect.cs" />
-    <Compile Include="Main\distributionArz.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Main\distributionNN.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Main\Event.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -154,7 +147,22 @@
     <Compile Include="Main\Pipeline.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Main\PipeLog.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Main\PipeStatu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Main\Role.cs" />
+    <Compile Include="Main\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Main\TaskStatu.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Main\UserRight.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Main\UserTask.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

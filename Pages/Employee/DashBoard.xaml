@@ -50,7 +50,6 @@
                             <DataGridTextColumn Header="Тип" Binding="{Binding EventType}" Width="*"/>
                             <DataGridTextColumn Header="Дата" Binding="{Binding EventDate}" Width="*"/>
                             <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="2*"/>
-                            <DataGridCheckBoxColumn Header="Критично" Binding="{Binding IsCritical}" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>
@@ -66,7 +65,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Задача" Binding="{Binding TaskName}" Width="2*"/>
                             <DataGridTextColumn Header="Описание" Binding="{Binding Description}" Width="*"/>
-                            <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                            <DataGridTextColumn Header="Статус" Binding="{Binding TaskStatu.Name}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Border>

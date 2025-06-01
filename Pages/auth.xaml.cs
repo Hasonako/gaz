@@ -1,6 +1,7 @@
 ﻿using gaz.Main;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Linq;
 using System.Text;
@@ -32,16 +33,16 @@ namespace gaz.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             dbConnect.entObj = new gazEntities();
-
-            var user = dbConnect.entObj.authorization.FirstOrDefault(x => x.password == pass.Password && x.login == log.Text);
+            var user = dbConnect.entObj.authorizations.FirstOrDefault(x => x.password == pass.Password && x.login == log.Text);
             if (user == null) wrong.Content = "Неверный логин или пароль";
             else 
             {
-                Role.UserName = user.name;
-                Role.UserRole = user.role;
                 Role.UserId = user.id;
-                if (user.role == "admin") this.NavigationService.Navigate(new Employee.AdminPage());
-                if (user.role == "empl") this.NavigationService.Navigate(new Employee.DashBoard());
+                Role.UserName = user.name;
+                Role.UserRole = user.UserRight.RightsName;
+                
+                if (Role.UserRole == "Admin") this.NavigationService.Navigate(new Employee.AdminPage());
+                if (Role.UserRole == "ComUser") this.NavigationService.Navigate(new Employee.DashBoard());
             }
         }
     }

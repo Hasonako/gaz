@@ -26,9 +26,8 @@ namespace gaz
         {
             InitializeComponent();
             dbConnect.entObj = new gazEntities();
-            Main.frameAcc.frmObj = mainFrame;
+            frameAcc.frmObj = mainFrame;
             mainFrame.Navigate(new Pages.auth());
         }
-
     }
 }

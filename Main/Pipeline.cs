@@ -18,20 +18,24 @@ namespace gaz.Main
         public Pipeline()
         {
             this.Events = new HashSet<Event>();
+            this.PipeLogs = new HashSet<PipeLog>();
         }
     
         public int PipelineID { get; set; }
         public int Code { get; set; }
         public string Location { get; set; }
-        public Nullable<System.DateTime> InstallationDate { get; set; }
-        public Nullable<System.DateTime> LastInspectionDate { get; set; }
-        public Nullable<System.DateTime> NextInspectionDate { get; set; }
-        public string Status { get; set; }
-        public Nullable<double> Pressure { get; set; }
-        public Nullable<double> Length { get; set; }
+        public System.DateTime InstallationDate { get; set; }
+        public System.DateTime LastInspectionDate { get; set; }
+        public System.DateTime NextInspectionDate { get; set; }
+        public int Status { get; set; }
+        public decimal Pressure { get; set; }
+        public decimal Length { get; set; }
         public string Notes { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
+        public virtual PipeStatu PipeStatu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PipeLog> PipeLogs { get; set; }
     }
 }

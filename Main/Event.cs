@@ -18,9 +18,9 @@ namespace gaz.Main
         public string EventType { get; set; }
         public System.DateTime EventDate { get; set; }
         public string Description { get; set; }
-        public Nullable<int> PipelineID { get; set; }
-        public Nullable<int> EmployeeID { get; set; }
-        public Nullable<System.DateTime> CreatedAt { get; set; }
+        public int PipelineID { get; set; }
+        public int EmployeeID { get; set; }
+        public System.DateTime CreatedAt { get; set; }
         public Nullable<bool> IsCritical { get; set; }
     
         public virtual authorization authorization { get; set; }

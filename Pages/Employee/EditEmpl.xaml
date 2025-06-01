@@ -30,18 +30,13 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
-                <TextBlock Text="Логин:" Width="150"/>
-                <TextBox Name="txbLogin" Width="150" Text="{Binding login}"/>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Пароль:" Width="150"/>
                 <TextBox Name="txbPassword" Width="150"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Статус:" Width="150"/>
-                <ComboBox Name="cmbFilterRole" Width="150" Height="25" FontSize="14" 
+                <ComboBox Name="cmbRole" Width="150" Height="25" FontSize="14" 
                 VerticalContentAlignment="Center"/>
             </StackPanel>
             

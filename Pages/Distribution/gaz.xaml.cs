@@ -60,7 +60,7 @@ namespace gaz.Pages
         private void ApplyFilters()
         {
             string searchText = txbSearchName.Text.ToLower();
-            var query = dbConnect.entObj.Pipeline.AsQueryable();
+            var query = dbConnect.entObj.Pipelines.AsQueryable();
             if (!string.IsNullOrEmpty(txbSearchCode.Text))
             {
                 int searchCode = Convert.ToInt32(txbSearchCode.Text);
@@ -98,6 +98,11 @@ namespace gaz.Pages
         private void cmbFilterPlace_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ApplyFilters();
+        }
+
+        private void MenuBack_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.GoBack();
         }
     }
 }

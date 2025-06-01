@@ -21,10 +21,10 @@
                 <RectangleGeometry Rect="0 0 600 605" RadiusX="10" RadiusY="10"/>
             </Border.Clip>
             <Grid>
-                <StackPanel Margin ="0 100 0 0" VerticalAlignment="Top">
-                    <TextBlock FontWeight="Light" FontSize="46" Foreground="White" TextAlignment="Center" Text="Welcome"/>
-                    <TextBlock FontWeight="Light" FontSize="18" Foreground="White" TextAlignment="Center" Text="Sign up"/>
-                    <TextBlock FontWeight="Light" FontSize="18" Foreground="White" TextAlignment="Center" Text="Gazprom"/>
+                <StackPanel Margin ="0 70 0 0" VerticalAlignment="Top">
+                    <TextBlock FontWeight="Light" FontSize="46" Foreground="White" TextAlignment="Center" Text="Добро пожаловать"/>
+                    <TextBlock FontWeight="Light" FontSize="18" Foreground="White" TextAlignment="Center" Text="Авторизация"/>
+                    <TextBlock FontWeight="Light" FontSize="18" Foreground="White" TextAlignment="Center" Text="Газпром"/>
                 </StackPanel>
                 <Ellipse Width="500" Height="500" VerticalAlignment="Bottom" Fill="#80c0ff" Margin="50 0 0 -250" Opacity="0.6"/>
                 <Ellipse Width="300" Height="300" VerticalAlignment="Bottom" Fill="#83c2ff" Margin="-450 0 0 30" Opacity="0.3"/>

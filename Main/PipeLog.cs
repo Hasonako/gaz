@@ -12,13 +12,14 @@ namespace gaz.Main
     using System;
     using System.Collections.Generic;
     
-    public partial class distributionArz
+    public partial class PipeLog
     {
         public int id { get; set; }
-        public int code { get; set; }
-        public string name { get; set; }
-        public decimal length { get; set; }
-        public string status { get; set; }
-        public string endpoint { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public System.DateTime date { get; set; }
+        public Nullable<int> PipeId { get; set; }
+    
+        public virtual Pipeline Pipeline { get; set; }
     }
 }

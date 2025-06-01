@@ -12,13 +12,12 @@ namespace gaz.Main
     using System;
     using System.Collections.Generic;
     
-    public partial class distributionNN
+    public partial class sysdiagram
     {
-        public int id { get; set; }
-        public int code { get; set; }
         public string name { get; set; }
-        public decimal length { get; set; }
-        public string status { get; set; }
-        public string endpoint { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

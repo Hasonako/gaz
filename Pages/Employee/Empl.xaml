@@ -35,7 +35,8 @@
             <DataGrid Name="emp" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="emp_MouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Имя" Binding="{Binding name}" Width="150"/>
-                    <DataGridTextColumn Header="Роль" Binding="{Binding role}" Width="100"/>
+                    <DataGridTextColumn Header="Роль" Binding="{Binding UserRight.RightsName}" Width="100"/>
+                    <DataGridTextColumn Header="Логин" Binding="{Binding login}" Width="100"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

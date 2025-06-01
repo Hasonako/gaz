@@ -22,10 +22,12 @@ namespace gaz.Main
     
         public int Id { get; set; }
         public string TaskName { get; set; }
-        public Nullable<int> EmployeeId { get; set; }
+        public int EmployeeId { get; set; }
         public string Description { get; set; }
+        public Nullable<int> Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<authorization> authorizations { get; set; }
+        public virtual TaskStatu TaskStatu { get; set; }
     }
 }

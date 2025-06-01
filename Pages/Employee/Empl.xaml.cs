@@ -24,7 +24,7 @@ namespace gaz.Pages
         public Empl()
         {
             InitializeComponent();
-            emp.ItemsSource = dbConnect.entObj.authorization.ToList();
+            emp.ItemsSource = dbConnect.entObj.authorizations.ToList();
         }
         private void emp_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -37,7 +37,7 @@ namespace gaz.Pages
         private void ApplyFilters()
         {
             string searchName = txbSearchName.Text.ToLower();
-            var query = dbConnect.entObj.authorization.AsQueryable();
+            var query = dbConnect.entObj.authorizations.AsQueryable();
 
             if (!string.IsNullOrEmpty(txbSearchName.Text))
                 query = query.Where(m => m.name.ToLower().Contains(searchName));
@@ -45,7 +45,11 @@ namespace gaz.Pages
             emp.ItemsSource = query.ToList();
         }
         private void menuAddEmpl_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new AddEmpl());
-        private void menuBack_Click(object sender, RoutedEventArgs e) => this.NavigationService.Navigate(new gaz());
+        private void menuBack_Click(object sender, RoutedEventArgs e)
+        {
+            if (Role.UserRole == "Admin") this.NavigationService.Navigate(new Employee.AdminPage());
+            if (Role.UserRole == "ComUser") this.NavigationService.Navigate(new gaz());
+        }     
         private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
         private void menuAddTask_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Employee.AddTaskPage());
     }

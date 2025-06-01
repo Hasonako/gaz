@@ -13,6 +13,6 @@
         WindowStartupLocation="CenterScreen" 
         Background="Transparent">
     <Grid>
-        <Frame Name="mainFrame"/>
+        <Frame Name="mainFrame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

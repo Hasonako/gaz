@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gaz.Main;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,10 @@ namespace gaz.Pages.Employee
 
         private void menuLogout_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            Role.UserId = 0;
+            Role.UserName = "";
+            Role.UserRole = "";
+            NavigationService.Navigate(new auth());
         }
 
         private void menuExit_Click(object sender, RoutedEventArgs e)
