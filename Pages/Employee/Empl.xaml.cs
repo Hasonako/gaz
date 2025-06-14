@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,7 +25,8 @@ namespace gaz.Pages
         public Empl()
         {
             InitializeComponent();
-            emp.ItemsSource = dbConnect.entObj.authorizations.ToList();
+            emp.ItemsSource = dbConnect.entObj.Users.ToList();
+            lvTasks.ItemsSource = dbConnect.entObj.UserTasks.ToList();
         }
         private void emp_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -37,7 +39,7 @@ namespace gaz.Pages
         private void ApplyFilters()
         {
             string searchName = txbSearchName.Text.ToLower();
-            var query = dbConnect.entObj.authorizations.AsQueryable();
+            var query = dbConnect.entObj.Users.AsQueryable();
 
             if (!string.IsNullOrEmpty(txbSearchName.Text))
                 query = query.Where(m => m.name.ToLower().Contains(searchName));
@@ -52,5 +54,22 @@ namespace gaz.Pages
         }     
         private void txbSearchName_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
         private void menuAddTask_Click(object sender, RoutedEventArgs e) => NavigationService.Navigate(new Employee.AddTaskPage());
+
+        private void emp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if(emp.SelectedItem != null)
+            {
+                var selectedEmployee = emp.SelectedItem as User;
+                var tasks = dbConnect.entObj.UserTasks.Where(t => t.EmployeeId == selectedEmployee.id).ToList();
+
+                if (tasks.Count == 0)
+                {
+                    MessageBox.Show("У этого сотрудника нет задач.");
+                }
+
+                lvTasks.ItemsSource = tasks;
+            }
+        }
     }
 }

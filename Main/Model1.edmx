@@ -4,18 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="gazModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="authorization">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="login" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="password" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="tasks" Type="int" />
-          <Property Name="rights" Type="int" Nullable="false" />
-        </EntityType>
+      <Schema Namespace="gazModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Events">
           <Key>
             <PropertyRef Name="EventID" />
@@ -85,6 +74,16 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RightsName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="rights" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserTasks">
           <Key>
             <PropertyRef Name="Id" />
@@ -97,21 +96,21 @@
         </EntityType>
         <Association Name="FK_authorization_UserRights">
           <End Role="UserRights" Type="Self.UserRights" Multiplicity="1" />
-          <End Role="authorization" Type="Self.authorization" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserRights">
               <PropertyRef Name="id" />
             </Principal>
-            <Dependent Role="authorization">
+            <Dependent Role="Users">
               <PropertyRef Name="rights" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Events_Employees">
-          <End Role="authorization" Type="Self.authorization" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Events" Type="Self.Events" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="authorization">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Events">
@@ -155,18 +154,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Task">
-          <End Role="UserTasks" Type="Self.UserTasks" Multiplicity="0..1" />
-          <End Role="authorization" Type="Self.authorization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserTasks">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="authorization">
-              <PropertyRef Name="tasks" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserTasks_TaskStatus">
           <End Role="TaskStatus" Type="Self.TaskStatus" Multiplicity="0..1" />
           <End Role="UserTasks" Type="Self.UserTasks" Multiplicity="*" />
@@ -179,8 +166,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserTasks_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserTasks" Type="Self.UserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="gazModelStoreContainer">
-          <EntitySet Name="authorization" EntityType="Self.authorization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pipelines" EntityType="Self.Pipelines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PipeLogs" EntityType="Self.PipeLogs" Schema="dbo" store:Type="Tables" />
@@ -188,13 +186,14 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskStatus" EntityType="Self.TaskStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRights" EntityType="Self.UserRights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserTasks" EntityType="Self.UserTasks" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_authorization_UserRights" Association="Self.FK_authorization_UserRights">
             <End Role="UserRights" EntitySet="UserRights" />
-            <End Role="authorization" EntitySet="authorization" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_Employees" Association="Self.FK_Events_Employees">
-            <End Role="authorization" EntitySet="authorization" />
+            <End Role="Users" EntitySet="Users" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_Pipelines" Association="Self.FK_Events_Pipelines">
@@ -209,33 +208,20 @@
             <End Role="Pipelines" EntitySet="Pipelines" />
             <End Role="PipeLogs" EntitySet="PipeLogs" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Task" Association="Self.FK_User_Task">
-            <End Role="UserTasks" EntitySet="UserTasks" />
-            <End Role="authorization" EntitySet="authorization" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserTasks_TaskStatus" Association="Self.FK_UserTasks_TaskStatus">
             <End Role="TaskStatus" EntitySet="TaskStatus" />
             <End Role="UserTasks" EntitySet="UserTasks" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserTasks_Users" Association="Self.FK_UserTasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="gazModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="authorization">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="login" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="tasks" Type="Int32" />
-          <Property Name="rights" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserRight" Relationship="Self.FK_authorization_UserRights" FromRole="authorization" ToRole="UserRights" />
-          <NavigationProperty Name="Events" Relationship="Self.FK_Events_Employees" FromRole="authorization" ToRole="Events" />
-          <NavigationProperty Name="UserTask" Relationship="gazModel.FK_User_Task" FromRole="authorization" ToRole="UserTask" />
-        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="EventID" />
@@ -248,7 +234,7 @@
           <Property Name="EmployeeID" Type="Int32" Nullable="false" />
           <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsCritical" Type="Boolean" />
-          <NavigationProperty Name="authorization" Relationship="Self.FK_Events_Employees" FromRole="Events" ToRole="authorization" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Events_Employees" FromRole="Events" ToRole="Users" />
           <NavigationProperty Name="Pipeline" Relationship="Self.FK_Events_Pipelines" FromRole="Events" ToRole="Pipelines" />
         </EntityType>
         <EntityType Name="Pipeline">
@@ -298,31 +284,52 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="TaskStatu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="UserTasks" Relationship="Self.FK_UserTasks_TaskStatus" FromRole="TaskStatus" ToRole="UserTasks" />
+        </EntityType>
         <EntityType Name="UserRight">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RightsName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="authorizations" Relationship="Self.FK_authorization_UserRights" FromRole="UserRights" ToRole="authorization" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_authorization_UserRights" FromRole="UserRights" ToRole="Users" />
         </EntityType>
-        <Association Name="FK_authorization_UserRights">
-          <End Role="UserRights" Type="Self.UserRight" Multiplicity="1" />
-          <End Role="authorization" Type="Self.authorization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserRights">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="authorization">
-              <PropertyRef Name="rights" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="rights" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_Events_Employees" FromRole="Users" ToRole="Events" />
+          <NavigationProperty Name="UserRight" Relationship="Self.FK_authorization_UserRights" FromRole="Users" ToRole="UserRights" />
+          <NavigationProperty Name="UserTasks" Relationship="Self.FK_UserTasks_Users" FromRole="Users" ToRole="UserTasks" />
+        </EntityType>
+        <EntityType Name="UserTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaskName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" />
+          <NavigationProperty Name="TaskStatu" Relationship="Self.FK_UserTasks_TaskStatus" FromRole="UserTasks" ToRole="TaskStatus" />
+          <NavigationProperty Name="User" Relationship="Self.FK_UserTasks_Users" FromRole="UserTasks" ToRole="Users" />
+        </EntityType>
         <Association Name="FK_Events_Employees">
-          <End Role="authorization" Type="Self.authorization" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="authorization">
+            <Principal Role="Users">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Events">
@@ -366,20 +373,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserTasks_TaskStatus">
+          <End Role="TaskStatus" Type="Self.TaskStatu" Multiplicity="0..1" />
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_authorization_UserRights">
+          <End Role="UserRights" Type="Self.UserRight" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRights">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="rights" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserTasks_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="UserTasks" Type="Self.UserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserTasks">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="gazEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="authorizations" EntityType="Self.authorization" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Pipelines" EntityType="Self.Pipeline" />
           <EntitySet Name="PipeLogs" EntityType="Self.PipeLog" />
           <EntitySet Name="PipeStatus" EntityType="Self.PipeStatu" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TaskStatus" EntityType="Self.TaskStatu" />
           <EntitySet Name="UserRights" EntityType="Self.UserRight" />
-          <AssociationSet Name="FK_authorization_UserRights" Association="Self.FK_authorization_UserRights">
-            <End Role="UserRights" EntitySet="UserRights" />
-            <End Role="authorization" EntitySet="authorizations" />
-          </AssociationSet>
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserTasks" EntityType="Self.UserTask" />
           <AssociationSet Name="FK_Events_Employees" Association="Self.FK_Events_Employees">
-            <End Role="authorization" EntitySet="authorizations" />
+            <End Role="Users" EntitySet="Users" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
           <AssociationSet Name="FK_Events_Pipelines" Association="Self.FK_Events_Pipelines">
@@ -394,79 +435,25 @@
             <End Role="Pipelines" EntitySet="Pipelines" />
             <End Role="PipeLogs" EntitySet="PipeLogs" />
           </AssociationSet>
-          <EntitySet Name="TaskStatus" EntityType="gazModel.TaskStatu" />
-          <EntitySet Name="UserTasks" EntityType="gazModel.UserTask" />
-          <AssociationSet Name="FK_User_Task" Association="gazModel.FK_User_Task">
-            <End Role="UserTask" EntitySet="UserTasks" />
-            <End Role="authorization" EntitySet="authorizations" />
+          <AssociationSet Name="FK_UserTasks_TaskStatus" Association="Self.FK_UserTasks_TaskStatus">
+            <End Role="TaskStatus" EntitySet="TaskStatus" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserTasks_TaskStatus" Association="gazModel.FK_UserTasks_TaskStatus">
-            <End Role="TaskStatu" EntitySet="TaskStatus" />
-            <End Role="UserTask" EntitySet="UserTasks" />
+          <AssociationSet Name="FK_authorization_UserRights" Association="Self.FK_authorization_UserRights">
+            <End Role="UserRights" EntitySet="UserRights" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserTasks_Users" Association="Self.FK_UserTasks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserTasks" EntitySet="UserTasks" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="TaskStatu">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="UserTasks" Relationship="gazModel.FK_UserTasks_TaskStatus" FromRole="TaskStatu" ToRole="UserTask" />
-        </EntityType>
-        <EntityType Name="UserTask">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TaskName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" />
-          <NavigationProperty Name="authorizations" Relationship="gazModel.FK_User_Task" FromRole="UserTask" ToRole="authorization" />
-          <NavigationProperty Name="TaskStatu" Relationship="gazModel.FK_UserTasks_TaskStatus" FromRole="UserTask" ToRole="TaskStatu" />
-        </EntityType>
-        <Association Name="FK_User_Task">
-          <End Type="gazModel.UserTask" Role="UserTask" Multiplicity="0..1" />
-          <End Type="gazModel.authorization" Role="authorization" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserTask">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="authorization">
-              <PropertyRef Name="tasks" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserTasks_TaskStatus">
-          <End Type="gazModel.TaskStatu" Role="TaskStatu" Multiplicity="0..1" />
-          <End Type="gazModel.UserTask" Role="UserTask" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TaskStatu">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="UserTask">
-              <PropertyRef Name="Status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="gazModelStoreContainer" CdmEntityContainer="gazEntities">
-          <EntitySetMapping Name="authorizations">
-            <EntityTypeMapping TypeName="gazModel.authorization">
-              <MappingFragment StoreEntitySet="authorization">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="login" ColumnName="login" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="tasks" ColumnName="tasks" />
-                <ScalarProperty Name="rights" ColumnName="rights" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Events">
             <EntityTypeMapping TypeName="gazModel.Event">
               <MappingFragment StoreEntitySet="Events">
@@ -527,6 +514,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TaskStatus">
+            <EntityTypeMapping TypeName="gazModel.TaskStatu">
+              <MappingFragment StoreEntitySet="TaskStatus">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserRights">
             <EntityTypeMapping TypeName="gazModel.UserRight">
               <MappingFragment StoreEntitySet="UserRights">
@@ -535,22 +530,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TaskStatus">
-            <EntityTypeMapping TypeName="gazModel.TaskStatu">
-              <MappingFragment StoreEntitySet="TaskStatus">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="gazModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="rights" ColumnName="rights" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserTasks">
             <EntityTypeMapping TypeName="gazModel.UserTask">
               <MappingFragment StoreEntitySet="UserTasks">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

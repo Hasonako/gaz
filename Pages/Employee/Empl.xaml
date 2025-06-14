@@ -31,14 +31,36 @@
                 TextChanged="txbSearchName_TextChanged"/>
         </StackPanel> 
         <!--Таблица-->
-        <StackPanel Grid.Row="2">
-            <DataGrid Name="emp" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="emp_MouseDoubleClick">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Имя" Binding="{Binding name}" Width="150"/>
-                    <DataGridTextColumn Header="Роль" Binding="{Binding UserRight.RightsName}" Width="100"/>
-                    <DataGridTextColumn Header="Логин" Binding="{Binding login}" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0">
+                <DataGrid Name="emp" AutoGenerateColumns="False" IsReadOnly="True" MouseDoubleClick="emp_MouseDoubleClick"
+                          Width="350" SelectionChanged="emp_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding name}" Width="150"/>
+                        <DataGridTextColumn Header="Роль" Binding="{Binding UserRight.RightsName}" Width="100"/>
+                        <DataGridTextColumn Header="Логин" Binding="{Binding login}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <ListView Grid.Column="1"
+                      Name="lvTasks" 
+                      Margin="10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Задача" DisplayMemberBinding="{Binding TaskName}" Width="150"/>
+                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="300"/>
+                        <GridViewColumn Header="Сотрудник" DisplayMemberBinding="{Binding User.name}" Width="150"/>
+                        <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding TaskStatu.Name}" Width="150"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+        
     </Grid>
 </Page>

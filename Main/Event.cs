@@ -23,7 +23,7 @@ namespace gaz.Main
         public System.DateTime CreatedAt { get; set; }
         public Nullable<bool> IsCritical { get; set; }
     
-        public virtual authorization authorization { get; set; }
+        public virtual User User { get; set; }
         public virtual Pipeline Pipeline { get; set; }
     }
 }

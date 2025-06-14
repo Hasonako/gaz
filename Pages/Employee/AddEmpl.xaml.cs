@@ -66,7 +66,7 @@ namespace gaz.Pages
             }
 
             // Проверка: логин должен быть уникальным
-            var existingUser = dbConnect.entObj.authorizations.FirstOrDefault(u => u.login == txbLogin.Text.Trim());
+            var existingUser = dbConnect.entObj.Users.FirstOrDefault(u => u.login == txbLogin.Text.Trim());
             if (existingUser != null)
             {
                 MessageBox.Show("Пользователь с таким логином уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -86,7 +86,7 @@ namespace gaz.Pages
             }
 
             // Создание нового пользователя
-            authorization newUser = new authorization()
+            User newUser = new User()
             {
                 name = name,
                 login = login,
@@ -97,7 +97,7 @@ namespace gaz.Pages
             // Сохранение
             try
             {
-                dbConnect.entObj.authorizations.Add(newUser);
+                dbConnect.entObj.Users.Add(newUser);
                 dbConnect.entObj.SaveChanges();
 
                 MessageBox.Show("Сотрудник успешно добавлен.", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);

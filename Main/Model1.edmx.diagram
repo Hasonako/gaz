@@ -4,23 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="059d4db610be4fac97fb08eb9e558712" Name="Diagram1">
-        <EntityTypeShape EntityType="gazModel.authorization" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gazModel.Event" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gazModel.Pipeline" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="gazModel.PipeLog" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="gazModel.PipeStatu" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="gazModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="gazModel.UserRight" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <AssociationConnector Association="gazModel.FK_authorization_UserRights" ManuallyRouted="false" />
+      <Diagram DiagramId="76eb3ef48da946d885f9a266952d72e5" Name="Diagram1">
+        <EntityTypeShape EntityType="gazModel.Event" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.Pipeline" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.PipeLog" Width="1.5" PointX="5.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.PipeStatu" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.sysdiagram" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.TaskStatu" Width="1.5" PointX="6" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.UserRight" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.User" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="gazModel.UserTask" Width="1.5" PointX="8.25" PointY="5.375" IsExpanded="true" />
         <AssociationConnector Association="gazModel.FK_Events_Employees" ManuallyRouted="false" />
         <AssociationConnector Association="gazModel.FK_Events_Pipelines" ManuallyRouted="false" />
         <AssociationConnector Association="gazModel.FK_Pipelines_PipeStatus" ManuallyRouted="false" />
         <AssociationConnector Association="gazModel.FK_PipeLogs_Pipelines" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="gazModel.TaskStatu" Width="1.5" PointX="0.75" PointY="13.625" />
-        <EntityTypeShape EntityType="gazModel.UserTask" Width="1.5" PointX="3" PointY="13.25" />
-        <AssociationConnector Association="gazModel.FK_User_Task" />
-        <AssociationConnector Association="gazModel.FK_UserTasks_TaskStatus" />
+        <AssociationConnector Association="gazModel.FK_UserTasks_TaskStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="gazModel.FK_authorization_UserRights" ManuallyRouted="false" />
+        <AssociationConnector Association="gazModel.FK_UserTasks_Users" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

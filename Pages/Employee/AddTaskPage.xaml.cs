@@ -28,7 +28,7 @@ namespace gaz.Pages.Employee
         {
             InitializeComponent();
 
-            cmbEmp.ItemsSource = dbConnect.entObj.authorizations.ToList();
+            cmbEmp.ItemsSource = dbConnect.entObj.Users.ToList();
             cmbEmp.DisplayMemberPath = "name";
             cmbEmp.SelectedValuePath = "id";
         }
@@ -62,7 +62,7 @@ namespace gaz.Pages.Employee
             }
 
             // Приведение данных
-            var selectedUser = cmbEmp.SelectedItem as authorization;
+            var selectedUser = cmbEmp.SelectedItem as User;
             if (selectedUser == null)
             {
                 MessageBox.Show("Ошибка при получении данных о сотруднике.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);

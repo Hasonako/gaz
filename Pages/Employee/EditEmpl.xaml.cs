@@ -22,13 +22,13 @@ namespace gaz.Pages
 {
     public partial class EditEmpl : Page
     {
-        private authorization EmplObj;
+        private User EmplObj;
         public EditEmpl(object imp)
         {
             InitializeComponent();
             DataContext = imp;
             var mid = TypeDescriptor.GetProperties(DataContext)["id"].GetValue(DataContext);
-            EmplObj = dbConnect.entObj.authorizations.FirstOrDefault(e => e.id == (int)mid);
+            EmplObj = dbConnect.entObj.Users.FirstOrDefault(e => e.id == (int)mid);
 
             cmbRole.ItemsSource = dbConnect.entObj.UserRights.ToList();
             cmbRole.SelectedValuePath = "id";
@@ -41,7 +41,7 @@ namespace gaz.Pages
         {
             if (MessageBox.Show("Вы уверены?", "Удаление сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                dbConnect.entObj.authorizations.Remove(EmplObj);
+                dbConnect.entObj.Users.Remove(EmplObj);
                 dbConnect.entObj.SaveChanges();
                 this.NavigationService.Navigate(new Empl());
             }

@@ -12,24 +12,25 @@ namespace gaz.Main
     using System;
     using System.Collections.Generic;
     
-    public partial class authorization
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public authorization()
+        public User()
         {
             this.Events = new HashSet<Event>();
+            this.UserTasks = new HashSet<UserTask>();
         }
     
         public int id { get; set; }
         public string login { get; set; }
         public string password { get; set; }
         public string name { get; set; }
-        public Nullable<int> tasks { get; set; }
         public int rights { get; set; }
     
-        public virtual UserRight UserRight { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Event> Events { get; set; }
-        public virtual UserTask UserTask { get; set; }
+        public virtual UserRight UserRight { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserTask> UserTasks { get; set; }
     }
 }

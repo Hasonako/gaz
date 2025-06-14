@@ -25,14 +25,14 @@ namespace gaz.Main
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<authorization> authorizations { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Pipeline> Pipelines { get; set; }
         public virtual DbSet<PipeLog> PipeLogs { get; set; }
         public virtual DbSet<PipeStatu> PipeStatus { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<UserRight> UserRights { get; set; }
         public virtual DbSet<TaskStatu> TaskStatus { get; set; }
+        public virtual DbSet<UserRight> UserRights { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserTask> UserTasks { get; set; }
     }
 }

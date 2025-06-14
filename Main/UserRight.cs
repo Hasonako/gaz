@@ -17,13 +17,13 @@ namespace gaz.Main
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserRight()
         {
-            this.authorizations = new HashSet<authorization>();
+            this.Users = new HashSet<User>();
         }
     
         public int id { get; set; }
         public string RightsName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<authorization> authorizations { get; set; }
+        public virtual ICollection<User> Users { get; set; }
     }
 }

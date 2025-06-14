@@ -14,20 +14,13 @@ namespace gaz.Main
     
     public partial class UserTask
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserTask()
-        {
-            this.authorizations = new HashSet<authorization>();
-        }
-    
         public int Id { get; set; }
         public string TaskName { get; set; }
         public int EmployeeId { get; set; }
         public string Description { get; set; }
         public Nullable<int> Status { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<authorization> authorizations { get; set; }
         public virtual TaskStatu TaskStatu { get; set; }
+        public virtual User User { get; set; }
     }
 }

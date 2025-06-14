@@ -32,8 +32,7 @@ namespace gaz.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            dbConnect.entObj = new gazEntities();
-            var user = dbConnect.entObj.authorizations.FirstOrDefault(x => x.password == pass.Password && x.login == log.Text);
+            var user = dbConnect.entObj.Users.FirstOrDefault(x => x.password == pass.Password && x.login == log.Text);
             if (user == null) wrong.Content = "Неверный логин или пароль";
             else 
             {
