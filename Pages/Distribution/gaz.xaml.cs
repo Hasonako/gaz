@@ -59,20 +59,28 @@ namespace gaz.Pages
         }
         private void ApplyFilters()
         {
-            string searchText = txbSearchName.Text.ToLower();
-            var query = dbConnect.entObj.Pipelines.AsQueryable();
-            if (!string.IsNullOrEmpty(txbSearchCode.Text))
+            try
             {
-                int searchCode = Convert.ToInt32(txbSearchCode.Text);
+                string searchText = txbSearchName.Text.ToLower();
+                var query = dbConnect.entObj.Pipelines.AsQueryable();
+                if (!string.IsNullOrEmpty(txbSearchCode.Text))
+                {
+                    int searchCode = Convert.ToInt32(txbSearchCode.Text);
 
-                query = query.Where(m => m.Code == searchCode);
+                    query = query.Where(m => m.Code == searchCode);
+                }
+
+                if (!string.IsNullOrEmpty(txbSearchName.Text))
+                {
+                    query = query.Where(m => m.Location.ToLower().Contains(searchText));
+                }
+                dist.ItemsSource = query.ToList();
             }
-
-            if (!string.IsNullOrEmpty(txbSearchName.Text))
+            catch (Exception ex)
             {
-                query = query.Where(m => m.Location.ToLower().Contains(searchText));
+                MessageBox.Show($"{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            dist.ItemsSource = query.ToList();
+            
         }
         private void menuExit_Click(object sender, RoutedEventArgs e)
         {

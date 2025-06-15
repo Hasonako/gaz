@@ -32,17 +32,30 @@ namespace gaz.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var user = dbConnect.entObj.Users.FirstOrDefault(x => x.password == pass.Password && x.login == log.Text);
-            if (user == null) wrong.Content = "Неверный логин или пароль";
-            else 
+            try
             {
-                Role.UserId = user.id;
-                Role.UserName = user.name;
-                Role.UserRole = user.UserRight.RightsName;
-                
-                if (Role.UserRole == "Admin") this.NavigationService.Navigate(new Employee.AdminPage());
-                if (Role.UserRole == "ComUser") this.NavigationService.Navigate(new Employee.DashBoard());
+                var user = dbConnect.entObj.Users.FirstOrDefault(x => x.password == pass.Password && x.login == log.Text);
+                if (user == null) wrong.Content = "Неверный логин или пароль";
+                else
+                {
+                    Role.UserId = user.id;
+                    Role.UserName = user.name;
+                    Role.UserRole = user.UserRight.RightsName;
+
+                    if (Role.UserRole == "Admin") this.NavigationService.Navigate(new Employee.AdminPage());
+                    if (Role.UserRole == "ComUser") this.NavigationService.Navigate(new Employee.DashBoard());
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                throw;
+            }
+        }
+
+        private void linkExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

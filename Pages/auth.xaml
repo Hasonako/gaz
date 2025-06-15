@@ -53,9 +53,15 @@
                     <Label Name="wrong" FontSize="14" Foreground="PaleVioletRed" Height="40" HorizontalAlignment="Center"/>
 
                 </StackPanel>
-                <Border VerticalAlignment="Top" Grid.Row="2" Background="#6a7eee" Height="50" Width="250" CornerRadius="10">
-                    <Button Background="Transparent" Content="Вход" Margin="5" Foreground="White" FontSize="22" BorderThickness="0" Click="Button_Click"/>
-                </Border>
+                <StackPanel Grid.Row="2">
+                    <Border VerticalAlignment="Top" Background="#6a7eee" Height="50" Width="250" CornerRadius="10">
+                        <Button Background="Transparent" Content="Вход" Margin="5" Foreground="White" FontSize="22" BorderThickness="0" Click="Button_Click"/>
+                    </Border>
+                    <TextBlock Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center" Margin="20">
+                        <Hyperlink Name="linkExit" Click="linkExit_Click">Выход</Hyperlink>
+                    </TextBlock>
+                </StackPanel>
+                
             </Grid>
         </Border>
     </Grid>
